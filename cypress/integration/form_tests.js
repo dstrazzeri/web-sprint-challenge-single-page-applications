@@ -1,5 +1,3 @@
-import cy from "cypress"
-
 describe('Lambda Eats App', () =>{
     beforeEach(() =>{
        cy.visit('http://localhost:3000/pizza')
@@ -119,6 +117,4 @@ describe('Lambda Eats App', () =>{
           cy.contains('add bbq please').should('exist')
        })
     })
- 
- 
  })
