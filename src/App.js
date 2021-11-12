@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Route } from 'react-router-dom';
 import axios from 'axios';
 import * as yup from 'yup';
@@ -21,12 +21,17 @@ const initialFormErrors = {
   name: '',
   size: ''
 }
+
+const initialDisabled = true;
+
 const App = () => {
   const [ pizzaOrder, setPizzaOrder ] = useState([]);
   const [ formErrors, setFormErrors ] = useState(initialFormErrors);
   const [ formValues, setFormValues ] = useState(initialFormValues);
+  const [ disabled, setDisabled ] = useState(initialDisabled);
 
   const updateForm = (inputName, inputValue) => {
+    validate(inputName, inputValue)
     setFormValues({ ...formValues, [inputName]: inputValue})
   }
   const postNewOrder = (newOrder) => {
@@ -60,8 +65,16 @@ const App = () => {
       })
       .catch(err => setFormErrors({ ...formErrors, [name]: err.errors[0]})
       )
-      validate(FormSchema)
   }
+
+  useEffect(() => {
+    FormSchema.isValid(formValues)
+    .then(valid =>{
+      setDisabled(!valid)
+    })
+    .finally(() => ('cleaning'))
+  }, [formValues])
+
   return (
     <>
       <h1>Lambda Eats</h1>
@@ -74,6 +87,8 @@ const App = () => {
           formValues={formValues}
           submitForm={submitForm}
           updateForm={updateForm}
+          formErrors={formErrors}
+          disabled={disabled}
         />
       </Route>
     </>
