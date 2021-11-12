@@ -1,7 +1,7 @@
 import React from "react";
 
 const Order = (props) => {
-  const { formValues, updateForm, submitForm } = props;
+  const { formValues, updateForm, submitForm, formErrors } = props;
 
   const onChange = (evt) => {
     const { name, value, checked, type } = evt.target;
@@ -17,6 +17,11 @@ const Order = (props) => {
 
   return (
     <form id="pizza-form" onSubmit={onSubmit}>
+      <div className="form-errors">
+        <input
+         formErrors={formErrors.name}
+         />
+         </div>
       <label>
         {" "}
         Customer Name:&nbsp;
@@ -67,9 +72,8 @@ const Order = (props) => {
             onChange={onChange}
             checked={formValues.olives}
           />
-        </label>
-         {" "}
-         Bacon
+        </label>{" "}
+        Bacon
         <label>
           <input
             type="checkbox"
