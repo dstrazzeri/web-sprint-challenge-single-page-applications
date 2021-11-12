@@ -6,7 +6,6 @@ const Order = (props) => {
   const onChange = (evt) => {
     const { name, value, checked, type } = evt.target;
     const valueToUse = type === "checkbox" ? checked : value;
-
     updateForm(name, valueToUse);
   };
 
@@ -18,9 +17,7 @@ const Order = (props) => {
   return (
     <form id="pizza-form" onSubmit={onSubmit}>
       <div className="form-errors">
-        <input
-         formErrors={formErrors.name}
-         />
+        {formErrors.name}
          </div>
       <label>
         {" "}
